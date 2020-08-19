@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=MultiMC Instance Picker
+GenericName=Minecraft Launcher
+Comment=Free, open source launcher and instance manager for Minecraft. Pick instances using rofi.
+Type=Application
+Terminal=false
+Exec=/path/to/multimc-rofi.py
+Icon=/path/to/unneeded/image.png
+Categories=Game
+Keywords=game;minecraft;
