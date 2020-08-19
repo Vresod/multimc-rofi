@@ -4,7 +4,6 @@ import subprocess
 from os import linesep
 import json
 from rofi import Rofi
-
 r = Rofi()
 subprocess.run("whoami > /tmp/whoami",shell=True)
 with open("/tmp/whoami","r") as whoami: user = whoami.read().replace(linesep,"")
@@ -18,14 +17,23 @@ except:
 	r.exit_with_error("MultiMC folder not found. Please add it to the code.")
 
 instances = []
-instances_grouped = []
+instances_shown = []
+instance_name = ""
 for group in instgroups["groups"]:
 	for instance in instgroups["groups"][group]["instances"]:
 		instances.append(instance)
-		instances_grouped.append(f"{instance} ({group})")
+		with open(f"{multimc_folder}/{instance}/instance.cfg","r") as instancecfg:
+			configs = instancecfg.read().split("\n")
+			for cfg in configs:
+				if(cfg.startswith("name=")):
+					instance_name = cfg.replace("name=","")
+					break
+		instances_shown.append(f"{instance_name} ({group})")
+index, key = r.select('instance', instances_shown)
 
-index, key = r.select('instance', instances_grouped)
 if (key == -1):
 	exit()
-print(f"launching {instances[index]}")
-subprocess.run(f"multimc -l {instances[index]}".split(" "))
+
+launched_instance = str(instances[index])
+print(f"launching {launched_instance}")
+subprocess.run(["multimc","-l",launched_instance])
