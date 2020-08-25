@@ -7,6 +7,7 @@ from rofi import Rofi
 r = Rofi()
 subprocess.run("whoami > /tmp/whoami",shell=True)
 with open("/tmp/whoami","r") as whoami: user = whoami.read().replace(linesep,"")
+subprocess.run("rm /tmp/whoami".split(" "))
 home = str(f"/home/{user}")
 multimc_folder = f"{home}/.local/share/multimc/instances" # replace with wherever multimc folder is, if this isn't it
 
